@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
+import undici, { BodyInit } from 'undici';
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,13 +26,13 @@ export default async function handler(
             redirect_uri
         });
 
-        const response = await fetch(request, {
+        const response = await undici.fetch(request, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': `Bearer ${code}`
             },
-            body: form
+            body: form as BodyInit
         });
         const json = await response.json();
         console.log({ json });
