@@ -17,7 +17,10 @@ export default function Debug() {
     useEffect(() => {
         setStorage({
             payload: auth.params,
-            response: JSON.parse(auth.response || '{}')
+            response: {
+                state: auth.state,
+                code: auth.code
+            }
         })
     }, [auth?.params, auth?.response]);
 
