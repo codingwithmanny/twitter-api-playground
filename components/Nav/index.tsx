@@ -9,8 +9,9 @@ export default function Nav() {
         <span className="font-semibold">Twitter API Playground</span>
 
         <ul className="flex gap-4">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/callback">Callback</Link></li>
+            <li><Link href="/">Auth</Link></li>
+            <li><Link href="/requests">API Requests</Link></li>
+            <li><Link href="/callback">Auth Callback</Link></li>
         </ul>
     </nav>
 };
