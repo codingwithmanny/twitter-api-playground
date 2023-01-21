@@ -58,6 +58,7 @@ export default function Requests() {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${auth.code}`
                             },
+                            credentials: 'include'
                         });
                         const json = await response.json();
                         

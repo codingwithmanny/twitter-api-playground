@@ -138,7 +138,7 @@ export default function Home() {
   const [params, setParams] = useState(defaultParams);
   const [searchScope, setSearchScope] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
-  const { setAuth, authReset, isAuthenticated } = useAuth();
+  const { setAuth, authReset, isAuthenticated, code } = useAuth();
 
   // Functions
   const onClickSignInWithTwitter = () => {
@@ -206,6 +206,41 @@ export default function Home() {
           {!isAuthenticated
             ? <button onClick={onClickSignInWithTwitter}>Sign in with Twitter</button>
             : <button onClick={() => authReset()}>Sign Out</button>}
+
+          {isAuthenticated
+            ? <section>
+
+                <form onSubmit={async (event) => {
+                    event.preventDefault();
+                    const request = `https://api.twitter.com/2/oauth2/token`;
+                    try {
+                        const form = new FormData();
+                        form.set('code', code);
+                        form.set('client_id', params.client_id);
+                        form.set('grant_type', 'authorization_code');
+                        form.set('redirect_uri', `${window.location.origin}/callback`);
+                        form.set('code_verifier', 'challenge');
+
+                        const response = await fetch(request, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'Authorization': `Bearer ${code}`
+                            },
+                        });
+                        const json = await response.json();
+                        console.log({ json });
+                    } catch (error: any) {
+                      console.log({ error });
+                    }
+                }}>
+                    <div className="mb-4">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+            </section>
+            : ''
+          }
         </main>
         <aside className="bg-zinc-800 w-full max-w-xl p-8 absolute top-0 bottom-0 right-0 overflow-scroll">
           <div className="mb-8">
