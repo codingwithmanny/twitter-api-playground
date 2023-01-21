@@ -212,21 +212,18 @@ export default function Home() {
 
                 <form onSubmit={async (event) => {
                     event.preventDefault();
-                    const request = `https://api.twitter.com/2/oauth2/token`;
+                    const request = `/api/token`;
                     try {
-                        const form = new FormData();
-                        form.set('code', code);
-                        form.set('client_id', params.client_id);
-                        form.set('grant_type', 'authorization_code');
-                        form.set('redirect_uri', `${window.location.origin}/callback`);
-                        form.set('code_verifier', 'challenge');
-
                         const response = await fetch(request, {
                             method: 'POST',
                             headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                                'Authorization': `Bearer ${code}`
+                                'Content-Type': 'application/json',
                             },
+                            body: JSON.stringify({
+                              code, 
+                              client_id: params.client_id,
+                              redirect_uri: `${window.location.origin}/callback`
+                            })
                         });
                         const json = await response.json();
                         console.log({ json });
