@@ -19,6 +19,12 @@ export default async function handler(
         form.set('redirect_uri', redirect_uri);
         form.set('code_verifier', 'challenge');
 
+        console.log({
+            code,
+            client_id,
+            redirect_uri
+        });
+
         const response = await fetch(request, {
             method: 'POST',
             headers: {
@@ -28,6 +34,7 @@ export default async function handler(
             body: form
         });
         const json = await response.json();
+        console.log({ json });
 
         return res.status(200).json({ code, client_id, redirect_uri, json });
     } catch (error: any) {
