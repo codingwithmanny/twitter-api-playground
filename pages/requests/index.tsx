@@ -48,7 +48,8 @@ export default function Requests() {
 
                 <h4>GET /2/tweets/counts/all</h4>
 
-                <form onSubmit={async () => {
+                <form onSubmit={async (event) => {
+                    event.preventDefault();
                     const request = `https://api.twitter.com/2/tweets/counts/all`;
                     try {
                         const response = await fetch(request, {
