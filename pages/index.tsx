@@ -2,7 +2,7 @@
 // ========================================================
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { encode as base64encode } from "base64-arraybuffer";;
+import { encode as base64encode } from "base64-arraybuffer";
 
 // Helpers
 // ========================================================
@@ -184,6 +184,7 @@ export default function Home() {
     if (!isLoaded) return;
     console.log({ LS_KEY, params });
     localStorage.setItem(LS_KEY, JSON.stringify(params));
+    // eslint-disable-next-line
   }, [params]);
 
   return (
@@ -222,7 +223,7 @@ export default function Home() {
             <div className="relative group mb-4">
               <input type="search" value={searchScope} onChange={(e) => setSearchScope(e.target.value)} />
               <div className="absolute group-hover:block hidden top-[48px] left-0 right-0 max-h-[160px] overflow-scroll rounded">
-                {SCOPES.filter(scope => scope.name.toLowerCase().includes(searchScope.toLowerCase())).map(scope => <span onClick={() => {
+                {SCOPES.filter(scope => scope.name.toLowerCase().includes(searchScope.toLowerCase())).map((scope, index) => <span key={`scope-${index}`} onClick={() => {
                   if (!params.scope.find(s => s.name === scope.name)) {
                     setParams((p) => ({ ...p, scope: [...p.scope, scope ] }))
                   } else {
