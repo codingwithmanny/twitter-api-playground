@@ -67,8 +67,8 @@ export default function AuthProvider({ children }: { children: JSX.Element }) {
 
     // Hooks
     useEffect(() => {
-        localStorage.setItem(LS_RESPONSE_KEY, JSON.stringify(auth.response));
-    }, [auth]);
+        localStorage.setItem(LS_RESPONSE_KEY, auth.response);
+    }, [auth?.response]);
 
     // Return
     return <AuthContext.Provider value={{ ...auth, authReset, setAuth }}>{children}</AuthContext.Provider>

@@ -14,12 +14,13 @@ export default function Callback() {
     useEffect(() => {
         const url = new URL(window.location.href);
         const searchParams = new URLSearchParams(url.search);
-        auth.setAuth({
+        auth.setAuth((a: any) => ({
+          ...a,
           code: searchParams.get('code') ?? '',
           state: searchParams.get('state') ?? '',
           response: searchParams.toString(), 
           isAuthenticated: searchParams.get('code') ? true : false
-        });
+        }));
     }, [])
 
     // Render
